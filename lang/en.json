@@ -1,0 +1,22 @@
+{
+    "esm": {
+        "dialog": {
+            "title": "Set Speech Mannerism",
+            "mannerismLabel": "Mannerism:",
+            "mannerismPlaceholder": "e.g., 'hmmm' or 'you see'",
+            "positionLabel": "Position:",
+            "positionStart": "Start",
+            "positionMiddle": "Middle",
+            "positionEnd": "End",
+            "saveButton": "Save",
+            "clearButton": "Clear and Disable"
+        },
+        "notifications": {
+            "selectOneToken": "Please select exactly one token.",
+            "mannerismCleared": "Speech mannerism for {actor} cleared.",
+            "mannerismSet": "Speech mannerism for {actor} set to \"{mannerism}\" ({position}).",
+            "validationError": "Your message does not follow {actor}'s speech mannerism: \"{mannerism}\" ({position})."
+        },
+        "init": "Eventide Speech Mannerisms | Initializing"
+    }
+} 

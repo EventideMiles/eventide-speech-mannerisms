@@ -1,0 +1,8 @@
+2025/06/06-07:36:06.497 64f0 Recovering log #11
+2025/06/06-07:36:06.505 64f0 Delete type=0 #11
+2025/06/06-07:36:06.505 64f0 Delete type=3 #10
+2025/06/06-07:36:46.865 18a4 Level-0 table #15: started
+2025/06/06-07:36:46.865 18a4 Level-0 table #15: 0 bytes OK
+2025/06/06-07:36:46.869 18a4 Delete type=0 #13
+2025/06/06-07:36:46.873 18a4 Manual compaction at level-0 from '!macros!6YHAaGKtW8Qo4dXK' @ 72057594037927935 : 1 .. '!macros!6YHAaGKtW8Qo4dXK' @ 0 : 0; will stop at (end)
+2025/06/06-07:36:46.873 18a4 Manual compaction at level-1 from '!macros!6YHAaGKtW8Qo4dXK' @ 72057594037927935 : 1 .. '!macros!6YHAaGKtW8Qo4dXK' @ 0 : 0; will stop at (end)

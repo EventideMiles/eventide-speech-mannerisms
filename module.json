@@ -1,0 +1,40 @@
+{
+  "id": "eventide-speech-mannerisms",
+  "title": "Eventide Speech Mannerisms",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "description": "<h2>Description</h2><p>This module is designed to enforce speech mannerisms among characters. Do you have a character who always starts or ends a message in a certain way? How about one that always uses a certain word somewhere within their message? With this module you can ensure that you include these mannerisms before sending a message as a character.</p>",
+  "authors": [
+    {
+      "name": "Miles Eventide",
+      "discord": "lunarrush",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/eventide-speech-mannerisms.mjs"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [
+    {
+      "name": "eventide-speech-mannerisms-scripts",
+      "label": "Eventide Speech Mannerisms Scripts",
+      "path": "packs/eventide-speech-mannerisms-scripts",
+      "type": "Macro",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    }
+  ]
+}
