@@ -10,6 +10,8 @@ This module is designed to enforce speech mannerisms for characters in Foundry V
     -   **Middle:** The mannerism must appear somewhere in the message.
     -   **End:** The mannerism must appear at the end of the message.
 -   **Flexible Formatting:** The module's validation allows for common separators (like spaces, commas, periods, and hyphens) between the letters of the mannerism. For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
+-   **Allow for multiple characters in a mannerism:** For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
+-   **Ignore OOC, emotes, whispers, and any messages that contain dice rolls.**
 -   **Easy Configuration:** A simple dialog allows you to set, change, or clear an actor's mannerism.
 -   **Simple Macro API:** A global API is provided to easily open the configuration dialog.
 -   **Translations:** The module can be translated into any language: submit a PR or contact me on discord.

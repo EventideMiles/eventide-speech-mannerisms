@@ -157,11 +157,16 @@ class EventideSpeechMannerisms {
       return true;
     }
 
-    const escapedMannerism = mannerism.replace(
-      /[-\/\\^$*+?.()|[\]{}]/g,
-      "\\$&",
-    );
-    const regexString = escapedMannerism.split("").join("[-.,\\s]*");
+    // For each character in the mannerism, allow it to be repeated one or more times.
+    // Then, join these characters with the separator pattern.
+    const regexString = mannerism
+      .split("")
+      .map((char) => {
+        const escapedChar = char.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+        return escapedChar + "+";
+      })
+      .join("[-.,\\s]*");
+
     let finalRegex;
 
     switch (position) {
@@ -189,7 +194,7 @@ class EventideSpeechMannerisms {
           position: position,
         }),
       );
-      
+
       // To prevent the chat box from clearing, we restore the content
       // after a short delay, allowing the core logic to clear it first.
       setTimeout(() => {
