@@ -1,39 +1,49 @@
-# Eventide Teleporter
+# Eventide Speech Mannerisms
 
-![Foundry v13](https://img.shields.io/badge/foundry-v13-green)
-[![License: LGPL 2.1+](https://img.shields.io/badge/License-LGPL_2.1+-blue.svg)](https://www.gnu.org/licenses/lgpl-2.1.html)
+This module is designed to enforce speech mannerisms for characters in Foundry Virtual Tabletop. Do you have a character who always starts or ends a message in a certain way? How about one that always uses a certain word somewhere within their message? With this module, you can ensure that you (and your players) include these mannerisms before sending a message as a character.
 
-This module is built to handle teleporting players around the map for a gm. It comes with 3 modes:
-- **Off:** the module doesn't activate
-- **Slow:** While holding the keybinding (settible: default m) you can click to teleport all selected tokens to your mouse position
-- **Fast:** When you press the keybinding any selected tokens will telport to your mouse cursor.
+## Features
 
-## Installation:
+-   **Set Per-Actor Mannerisms:** Define a unique speech mannerism and its required position for any actor.
+-   **Flexible Positioning:**
+    -   **Start:** The mannerism must appear at the beginning of the message.
+    -   **Middle:** The mannerism must appear somewhere in the message.
+    -   **End:** The mannerism must appear at the end of the message.
+-   **Flexible Formatting:** The module's validation allows for common separators (like spaces, commas, periods, and hyphens) between the letters of the mannerism. For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
+-   **Easy Configuration:** A simple dialog allows you to set, change, or clear an actor's mannerism.
+-   **Simple Macro API:** A global API is provided to easily open the configuration dialog.
 
-1. In Foundry VTT, navigate to the "Modules" tab
-2. Click "Install System"
-3. In the "Manifest URL" field, paste: https://github.com/EventideMiles/eventide-teleporter/releases/latest/download/module.json
-4. Click "Install"
-5. Enable the module in your world modules list.
+## Installation
 
-### Alternative Installation:
-
-1. Download the module from the [Foundry VTT Module Registry](https://foundryvtt.com/packages/eventide-teleporter) or [GitHub Releases](https://github.com/lunarrush/eventide-teleporter/releases).
-2. Extract the downloaded zip file to your FoundryVTT `Data/modules` directory.
-3. Enable the module in your world modules list.
+1.  Go to the "Add-on Modules" tab in the "Configuration and Setup" screen.
+2.  Click "Install Module".
+3.  Search for "Eventide Speech Mannerisms" and click "Install".
+4.  Activate the module in your game world's "Manage Modules" settings.
 
 ## Usage
 
-- The default keybinding is m. You can change it in foundry's Configure Controls menu.
-- The module will add a button to the left-hand side with the scene controls.
-- Clicking the button will cycle through the modes.
-  - **Off:** the module doesn't activate
-  - **Slow:** While holding the keybinding (settible: default m) you can click to teleport all selected tokens to your mouse position
-  - **Fast:** When you press the keybinding any selected tokens will telport to your mouse cursor.
+To configure a speech mannerism for an actor, you first need to create a macro.
 
-# Module Settings
-- **Snap to Grid:** If enabled, the module will snap the teleported tokens to the nearest grid square center. (default: true)
-- **Mode:** The mode to use when the module is activated. (default: slow)
+### Creating the Macro
+
+1.  Navigate to the "Macros" tab in the sidebar.
+2.  Click "Create Macro".
+3.  Set the name to something memorable, like "Set Speech Mannerism".
+4.  Change the "Type" to "Script".
+5.  In the "Script" field, enter the following command:
+    ```javascript
+    game.eventide.speechMannerisms.openDialog();
+    ```
+6.  Save the macro. You can now drag it to your hotbar for easy access.
+
+### Setting a Mannerism
+
+1.  Click on a token in the scene to select it.
+2.  Click your "Set Speech Mannerism" macro.
+3.  A dialog will appear, allowing you to enter the mannerism (e.g., "you see") and select its position (Start, Middle, or End).
+4.  Click "Save".
+
+Now, whenever anyone speaks as that character, the module will check if their message follows the configured rule. If it doesn't, the message will be blocked, and an error notification will appear.
 
 # License
 This project is licensed under LGPL 2.1+. See the LICENSE.md file for more details.

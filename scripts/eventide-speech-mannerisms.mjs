@@ -1,9 +1,14 @@
 const MODULE_ID = "eventide-speech-mannerisms";
 
+/**
+ * A static class to manage all functionality for the Eventide Speech Mannerisms module.
+ */
 class EventideSpeechMannerisms {
+  /**
+   * Initializes the module, setting up the API and registering hooks.
+   * This method is called once on the 'init' hook.
+   */
   static init() {
-    console.log("Eventide Speech Mannerisms | Initializing");
-
     // Expose the API to the game object.
     game.eventide = game.eventide || {};
     game.eventide.speechMannerisms = this;
@@ -12,11 +17,18 @@ class EventideSpeechMannerisms {
     Hooks.on("preCreateChatMessage", this.onPreCreateChatMessage.bind(this));
   }
 
+  /**
+   * Completes the module setup.
+   * This method is called once on the 'setup' hook to ensure localization is ready.
+   */
   static setup() {
     // This hook runs once the localization system is ready.
     console.log(game.i18n.localize("esm.init"));
   }
 
+  /**
+   * Opens the dialog to configure a speech mannerism for the selected actor.
+   */
   static openDialog() {
     const tokens = canvas.tokens.controlled;
     if (tokens.length !== 1) {
@@ -111,8 +123,25 @@ class EventideSpeechMannerisms {
     });
   }
 
+  /**
+   * A hook function that runs before a chat message is created.
+   * It checks if the message content adheres to the actor's configured speech mannerism.
+   * @param {ChatMessage} message - The ChatMessage document.
+   * @param {object} data - The data for the message.
+   * @param {object} options - Options for message creation.
+   * @param {string} userId - The ID of the user creating the message.
+   * @returns {boolean} - Returns false to prevent the message from being created if validation fails.
+   */
   static onPreCreateChatMessage(message, data, options, userId) {
     if (userId !== game.user.id) {
+      return true;
+    }
+
+    // Only apply to standard in-character messages.
+    // Ignore OOC, emotes, whispers, and any messages that contain dice rolls.
+    if (message.style !== CONST.CHAT_MESSAGE_STYLES.IC || message.isRoll) {
+      console.log("Not an IC message");
+      console.log(message);
       return true;
     }
 
@@ -160,6 +189,16 @@ class EventideSpeechMannerisms {
           position: position,
         }),
       );
+      
+      // To prevent the chat box from clearing, we restore the content
+      // after a short delay, allowing the core logic to clear it first.
+      setTimeout(() => {
+        const chatInput = document.getElementById("chat-message");
+        if (chatInput) {
+          chatInput.value = message.content;
+        }
+      }, 0);
+
       return false;
     }
 
