@@ -12,6 +12,7 @@ This module is designed to enforce speech mannerisms for characters in Foundry V
 -   **Flexible Formatting:** The module's validation allows for common separators (like spaces, commas, periods, and hyphens) between the letters of the mannerism. For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
 -   **Easy Configuration:** A simple dialog allows you to set, change, or clear an actor's mannerism.
 -   **Simple Macro API:** A global API is provided to easily open the configuration dialog.
+-   **Translations:** The module can be translated into any language: submit a PR or contact me on discord.
 
 ## Installation
 
@@ -22,9 +23,18 @@ This module is designed to enforce speech mannerisms for characters in Foundry V
 
 ## Usage
 
-To configure a speech mannerism for an actor, you first need to create a macro.
+To configure a speech mannerism for an actor, you first need to create a macro or import the macro from the module.
+
+### Importing the Macro
+
+1.  Navigate to the "Compendiums" tab in the sidebar.
+2.  Find the "Eventide Speech Mannerisms Scripts" compendium.
+3.  Click the "Import" button.
+4.  Find the script in your macros tab.
 
 ### Creating the Macro
+
+Alternatively, you can create the macro manually with whatever name and image you want.
 
 1.  Navigate to the "Macros" tab in the sidebar.
 2.  Click "Create Macro".
