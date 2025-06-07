@@ -1,6 +1,6 @@
 {
   "name": "eventide-speech-mannerisms",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "A module for Foundry VTT that allows GMs to set speech mannerisms for characters.",
   "scripts": {

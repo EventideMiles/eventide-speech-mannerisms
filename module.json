@@ -1,7 +1,7 @@
 {
   "id": "eventide-speech-mannerisms",
   "title": "Eventide Speech Mannerisms",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -36,5 +36,11 @@
       },
       "flags": {}
     }
-  ]
+  ],
+  "url": "https://github.com/EventideMiles/eventide-speech-mannerisms",
+  "manifest": "https://github.com/EventideMiles/eventide-speech-mannerisms/releases/latest/download/module.json",
+  "download": "https://github.com/EventideMiles/eventide-speech-mannerisms/releases/latest/download/eventide-speech-mannerisms.zip",
+  "license": "LICENSE.md",
+  "readme": "README.md"
+
 }
