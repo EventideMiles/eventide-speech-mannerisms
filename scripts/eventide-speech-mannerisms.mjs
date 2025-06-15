@@ -28,6 +28,7 @@ class EventideSpeechMannerisms {
 
   /**
    * Opens the dialog to configure a speech mannerism for the selected actor.
+   * Only GMs or actor owners may open the dialog.
    */
   static openDialog() {
     const tokens = canvas.tokens.controlled;
@@ -39,6 +40,12 @@ class EventideSpeechMannerisms {
     }
     const token = tokens[0];
     const actor = token.actor;
+
+    // Restrict dialog access to GMs or actor owners
+    if (!game.user.isGM && !actor.isOwner) {
+      ui.notifications.warn("You must be a GM or the owner of the actor to set a mannerism.");
+      return;
+    }
 
     const existingMannerism = actor.getFlag(MODULE_ID, "mannerism") || "";
     const existingPosition = actor.getFlag(MODULE_ID, "position") || "middle";
@@ -126,6 +133,12 @@ class EventideSpeechMannerisms {
   /**
    * A hook function that runs before a chat message is created.
    * It checks if the message content adheres to the actor's configured speech mannerism.
+   *
+   * Regex Escaping Note: Each character in the mannerism is escaped using a regex-safe replacement, 
+   * so that user input is always treated as literal text. This prevents regex injection and ensures 
+   * that only the intended mannerism is matched, while still allowing for flexible separators between 
+   * characters. Do not use the raw mannerism string directly in a regex.
+   *
    * @param {ChatMessage} message - The ChatMessage document.
    * @param {object} data - The data for the message.
    * @param {object} options - Options for message creation.
