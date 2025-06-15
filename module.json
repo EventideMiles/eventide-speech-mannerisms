@@ -1,7 +1,7 @@
 {
   "id": "eventide-speech-mannerisms",
   "title": "Eventide Speech Mannerisms",
-  "version": "0.0.2",
+  "version": "13.0.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
