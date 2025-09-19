@@ -13,3 +13,4 @@ minify.js
 releases\
 .prettierrc.json
 eslint.config.js
+.gitattributes

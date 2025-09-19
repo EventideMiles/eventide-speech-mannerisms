@@ -18,7 +18,7 @@ WORKING_DIR=$(pwd)
 mkdir -p "$TEMP_DIR/eventide-speech-mannerisms"
 
 # Copy all files into the new directory
-rsync -av --exclude='src/' --exclude='node_modules/' --exclude=".git/" --exclude='package.json' --exclude='package-lock.json' --exclude='.gitignore' --exclude='.vscode/' --exclude='exclude.txt' --exclude='release_script.sh' --exclude='release_script.bat' --exclude='minify.js' --exclude='releases/' . "$TEMP_DIR/eventide-speech-mannerisms/"
+rsync -av --exclude='src/' --exclude='node_modules/' --exclude=".git/" --exclude='package.json' --exclude='package-lock.json' --exclude='.gitignore' --exclude='.vscode/' --exclude='exclude.txt' --exclude='release_script.sh' --exclude='release_script.bat' --exclude='minify.js' --exclude='releases/' --exclude='.gitattributes' --exclude='.prettierrc.json' --exclude='eslint.config.js' . "$TEMP_DIR/eventide-speech-mannerisms/"
 
 # Minify JavaScript files
 node minify.js "$TEMP_DIR/eventide-speech-mannerisms"
