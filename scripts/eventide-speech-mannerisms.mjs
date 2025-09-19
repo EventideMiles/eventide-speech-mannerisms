@@ -49,6 +49,8 @@ class EventideSpeechMannerisms {
 
     const existingMannerism = actor.getFlag(MODULE_ID, "mannerism") || "";
     const existingPosition = actor.getFlag(MODULE_ID, "position") || "middle";
+    const existingAdvancedMode = actor.getFlag(MODULE_ID, "advancedMode") || false;
+    const existingRegex = actor.getFlag(MODULE_ID, "regex") || "";
 
     new foundry.applications.api.DialogV2({
       window: { title: game.i18n.localize("esm.dialog.title") },
@@ -66,6 +68,14 @@ class EventideSpeechMannerisms {
               <option value="end" ${existingPosition === "end" ? "selected" : ""}>${game.i18n.localize("esm.dialog.positionEnd")}</option>
             </select>
           </div>
+          <div class="form-group">
+            <label for="advancedMode">${game.i18n.localize("esm.dialog.advancedMode")}</label>
+            <input type="checkbox" name="advancedMode" ${existingAdvancedMode ? "checked" : ""}>
+          </div>
+          <div class="form-group">
+            <label>${game.i18n.localize("esm.dialog.regexLabel")}</label>
+            <input type="text" name="regex" value="${existingRegex}" placeholder="${game.i18n.localize("esm.dialog.regexPlaceholder")}">
+          </div>
         </form>
       `,
       buttons: [
@@ -73,11 +83,13 @@ class EventideSpeechMannerisms {
           action: "submit",
           label: game.i18n.localize("esm.dialog.saveButton"),
           default: true,
-          callback: (event, button, dialog) => {
+          callback: (_event, button, _dialog) => {
             const form = button.form;
             return {
               mannerism: form.elements.mannerism.value,
               position: form.elements.position.value,
+              advancedMode: form.elements.advancedMode.checked,
+              regex: form.elements.regex.value,
             };
           },
         },
@@ -90,6 +102,8 @@ class EventideSpeechMannerisms {
         if (result === "clear") {
           await actor.unsetFlag(MODULE_ID, "mannerism");
           await actor.unsetFlag(MODULE_ID, "position");
+          await actor.unsetFlag(MODULE_ID, "advancedMode");
+          await actor.unsetFlag(MODULE_ID, "regex");
           ui.notifications.info(
             game.i18n.format("esm.notifications.mannerismCleared", {
               actor: actor.name,
@@ -99,19 +113,23 @@ class EventideSpeechMannerisms {
         }
 
         if (typeof result === "object" && result !== null) {
-          if (result.mannerism) {
+          if (result.mannerism || (result.advancedMode && result.regex)) {
             await actor.setFlag(MODULE_ID, "mannerism", result.mannerism);
             await actor.setFlag(MODULE_ID, "position", result.position);
+            await actor.setFlag(MODULE_ID, "advancedMode", result.advancedMode);
+            await actor.setFlag(MODULE_ID, "regex", result.regex);
             ui.notifications.info(
               game.i18n.format("esm.notifications.mannerismSet", {
                 actor: actor.name,
-                mannerism: result.mannerism,
-                position: result.position,
+                mannerism: result.advancedMode ? result.regex : result.mannerism,
+                position: result.advancedMode ? "regex defined" : result.position,
               }),
             );
           } else {
             await actor.unsetFlag(MODULE_ID, "mannerism");
             await actor.unsetFlag(MODULE_ID, "position");
+            await actor.unsetFlag(MODULE_ID, "advancedMode");
+            await actor.unsetFlag(MODULE_ID, "regex");
             ui.notifications.info(
               game.i18n.format("esm.notifications.mannerismCleared", {
                 actor: actor.name,
@@ -145,7 +163,7 @@ class EventideSpeechMannerisms {
    * @param {string} userId - The ID of the user creating the message.
    * @returns {boolean} - Returns false to prevent the message from being created if validation fails.
    */
-  static onPreCreateChatMessage(message, data, options, userId) {
+  static onPreCreateChatMessage(message, _data, _options, userId) {
     if (userId !== game.user.id) {
       return true;
     }
@@ -165,14 +183,18 @@ class EventideSpeechMannerisms {
 
     const mannerism = actor.getFlag(MODULE_ID, "mannerism");
     const position = actor.getFlag(MODULE_ID, "position");
+    const advancedMode = actor.getFlag(MODULE_ID, "advancedMode");
+    const regex = actor.getFlag(MODULE_ID, "regex");
 
-    if (!mannerism) {
+    if ((advancedMode && !regex) || (!advancedMode && !mannerism)) {
       return true;
     }
 
     // For each character in the mannerism, allow it to be repeated one or more times.
     // Then, join these characters with the separator pattern.
-    const regexString = mannerism
+    const regexString = advancedMode
+      ? regex
+      : mannerism
       .split("")
       .map((char) => {
         const escapedChar = char.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
@@ -184,16 +206,19 @@ class EventideSpeechMannerisms {
 
     switch (position) {
       case "start":
-        finalRegex = new RegExp(`^\\s*${regexString}`, "i");
+        finalRegex = new RegExp(`^\\s*${regexString}`, "iv");
         break;
       case "end":
-        finalRegex = new RegExp(`${regexString}\\s*$`, "i");
+        finalRegex = new RegExp(`${regexString}\\s*$`, "iv");
         break;
       case "middle":
       default:
-        finalRegex = new RegExp(regexString, "i");
+        finalRegex = new RegExp(regexString, "iv");
         break;
     }
+
+    finalRegex = advancedMode ? new RegExp(regexString, "iv") : finalRegex;
+
 
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = message.content;
@@ -203,8 +228,8 @@ class EventideSpeechMannerisms {
       ui.notifications.error(
         game.i18n.format("esm.notifications.validationError", {
           actor: actor.name,
-          mannerism: mannerism,
-          position: position,
+          mannerism: advancedMode ? regex : mannerism,
+          position: advancedMode ? "regex defined" : position,
         }),
       );
 

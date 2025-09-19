@@ -4,24 +4,25 @@ This module is designed to enforce speech mannerisms for characters in Foundry V
 
 ## Features
 
--   **Set Per-Actor Mannerisms:** Define a unique speech mannerism and its required position for any actor.
--   **Flexible Positioning:**
-    -   **Start:** The mannerism must appear at the beginning of the message.
-    -   **Middle:** The mannerism must appear somewhere in the message.
-    -   **End:** The mannerism must appear at the end of the message.
--   **Flexible Formatting:** The module's validation allows for common separators (like spaces, commas, periods, and hyphens) between the letters of the mannerism. For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
--   **Allow for multiple characters in a mannerism:** For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
--   **Ignore OOC, emotes, whispers, and any messages that contain dice rolls.**
--   **Easy Configuration:** A simple dialog allows you to set, change, or clear an actor's mannerism.
--   **Simple Macro API:** A global API is provided to easily open the configuration dialog.
--   **Translations:** The module can be translated into any language: submit a PR or contact me on discord.
+- **Set Per-Actor Mannerisms:** Define a unique speech mannerism and its required position for any actor.
+- **Flexible Positioning:**
+  - **Start:** The mannerism must appear at the beginning of the message.
+  - **Middle:** The mannerism must appear somewhere in the message.
+  - **End:** The mannerism must appear at the end of the message.
+- **Flexible Formatting:** The module's validation allows for common separators (like spaces, commas, periods, and hyphens) between the letters of the mannerism. For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
+- **Allow for multiple characters in a mannerism:** For example, if the mannerism is "hmmm", the message could contain "h-m-m-m" or "h.m.m.m." and still be valid.
+- **Advanced Mode** Allows you to define your own regex with unicode support for if your use case is more complicated than the simple mode can support.
+- **Ignore OOC, emotes, whispers, and any messages that contain dice rolls.**
+- **Easy Configuration:** A simple dialog allows you to set, change, or clear an actor's mannerism.
+- **Simple Macro API:** A global API is provided to easily open the configuration dialog.
+- **Translations:** The module can be translated into any language: submit a PR or contact me on discord.
 
 ## Installation
 
-1.  Go to the "Add-on Modules" tab in the "Configuration and Setup" screen.
-2.  Click "Install Module".
-3.  Search for "Eventide Speech Mannerisms" and click "Install".
-4.  Activate the module in your game world's "Manage Modules" settings.
+1. Go to the "Add-on Modules" tab in the "Configuration and Setup" screen.
+2. Click "Install Module".
+3. Search for "Eventide Speech Mannerisms" and click "Install".
+4. Activate the module in your game world's "Manage Modules" settings.
 
 ## Usage
 
@@ -29,33 +30,36 @@ To configure a speech mannerism for an actor, you first need to create a macro o
 
 ### Importing the Macro
 
-1.  Navigate to the "Compendiums" tab in the sidebar.
-2.  Find the "Eventide Speech Mannerisms Scripts" compendium.
-3.  Click the "Import" button.
-4.  Find the script in your macros tab.
+1. Navigate to the "Compendiums" tab in the sidebar.
+2. Find the "Eventide Speech Mannerisms Scripts" compendium.
+3. Click the "Import" button.
+4. Find the script in your macros tab.
 
 ### Creating the Macro
 
 Alternatively, you can create the macro manually with whatever name and image you want.
 
-1.  Navigate to the "Macros" tab in the sidebar.
-2.  Click "Create Macro".
-3.  Set the name to something memorable, like "Set Speech Mannerism".
-4.  Change the "Type" to "Script".
-5.  In the "Script" field, enter the following command:
+1. Navigate to the "Macros" tab in the sidebar.
+2. Click "Create Macro".
+3. Set the name to something memorable, like "Set Speech Mannerism".
+4. Change the "Type" to "Script".
+5. In the "Script" field, enter the following command:
+
     ```javascript
     game.eventide.speechMannerisms.openDialog();
     ```
-6.  Save the macro. You can now drag it to your hotbar for easy access.
+
+6. Save the macro. You can now drag it to your hotbar for easy access.
 
 ### Setting a Mannerism
 
-1.  Click on a token in the scene to select it.
-2.  Click your "Set Speech Mannerism" macro.
-3.  A dialog will appear, allowing you to enter the mannerism (e.g., "you see") and select its position (Start, Middle, or End).
-4.  Click "Save".
+1. Click on a token in the scene to select it.
+2. Click your "Set Speech Mannerism" macro.
+3. A dialog will appear, allowing you to enter the mannerism (e.g., "you see") and select its position (Start, Middle, or End).
+4. Click "Save".
 
 Now, whenever anyone speaks as that character, the module will check if their message follows the configured rule. If it doesn't, the message will be blocked, and an error notification will appear.
 
-# License
+## License
+
 This project is licensed under LGPL 2.1+. See the LICENSE.md file for more details.
