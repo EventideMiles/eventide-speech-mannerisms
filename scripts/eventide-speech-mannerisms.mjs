@@ -43,13 +43,16 @@ class EventideSpeechMannerisms {
 
     // Restrict dialog access to GMs or actor owners
     if (!game.user.isGM && !actor.isOwner) {
-      ui.notifications.warn("You must be a GM or the owner of the actor to set a mannerism.");
+      ui.notifications.warn(
+        "You must be a GM or the owner of the actor to set a mannerism.",
+      );
       return;
     }
 
     const existingMannerism = actor.getFlag(MODULE_ID, "mannerism") || "";
     const existingPosition = actor.getFlag(MODULE_ID, "position") || "middle";
-    const existingAdvancedMode = actor.getFlag(MODULE_ID, "advancedMode") || false;
+    const existingAdvancedMode =
+      actor.getFlag(MODULE_ID, "advancedMode") || false;
     const existingRegex = actor.getFlag(MODULE_ID, "regex") || "";
 
     new foundry.applications.api.DialogV2({
@@ -121,8 +124,12 @@ class EventideSpeechMannerisms {
             ui.notifications.info(
               game.i18n.format("esm.notifications.mannerismSet", {
                 actor: actor.name,
-                mannerism: result.advancedMode ? result.regex : result.mannerism,
-                position: result.advancedMode ? "regex defined" : result.position,
+                mannerism: result.advancedMode
+                  ? result.regex
+                  : result.mannerism,
+                position: result.advancedMode
+                  ? "regex defined"
+                  : result.position,
               }),
             );
           } else {
@@ -152,9 +159,9 @@ class EventideSpeechMannerisms {
    * A hook function that runs before a chat message is created.
    * It checks if the message content adheres to the actor's configured speech mannerism.
    *
-   * Regex Escaping Note: Each character in the mannerism is escaped using a regex-safe replacement, 
-   * so that user input is always treated as literal text. This prevents regex injection and ensures 
-   * that only the intended mannerism is matched, while still allowing for flexible separators between 
+   * Regex Escaping Note: Each character in the mannerism is escaped using a regex-safe replacement,
+   * so that user input is always treated as literal text. This prevents regex injection and ensures
+   * that only the intended mannerism is matched, while still allowing for flexible separators between
    * characters. Do not use the raw mannerism string directly in a regex.
    *
    * @param {ChatMessage} message - The ChatMessage document.
@@ -195,30 +202,29 @@ class EventideSpeechMannerisms {
     const regexString = advancedMode
       ? regex
       : mannerism
-      .split("")
-      .map((char) => {
-        const escapedChar = char.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-        return escapedChar + "+";
-      })
-      .join("[-.,\\s]*");
+          .split("")
+          .map((char) => {
+            const escapedChar = char.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+            return escapedChar + "+";
+          })
+          .join("[-.,\\s]*");
 
     let finalRegex;
 
     switch (position) {
       case "start":
-        finalRegex = new RegExp(`^\\s*${regexString}`, "iv");
+        finalRegex = new RegExp(`^\\s*${regexString}`, "i");
         break;
       case "end":
-        finalRegex = new RegExp(`${regexString}\\s*$`, "iv");
+        finalRegex = new RegExp(`${regexString}\\s*$`, "i");
         break;
       case "middle":
       default:
-        finalRegex = new RegExp(regexString, "iv");
+        finalRegex = new RegExp(regexString, "i");
         break;
     }
 
-    finalRegex = advancedMode ? new RegExp(regexString, "iv") : finalRegex;
-
+    finalRegex = advancedMode ? new RegExp(regexString, "i") : finalRegex;
 
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = message.content;
